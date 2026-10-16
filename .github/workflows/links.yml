@@ -1,0 +1,39 @@
+name: Check links
+
+on:
+  pull_request:
+    paths: ["**/*.md", "lychee.toml", ".github/workflows/links.yml"]
+  schedule:
+    - cron: "0 7 * * 1" # Mondays 07:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check links
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --config lychee.toml "./**/*.md"
+          fail: ${{ github.event_name != 'schedule' }}
+          output: lychee-report.md
+
+      - name: Open an issue for broken links found on the weekly run
+        if: github.event_name == 'schedule' && steps.lychee.outputs.exit_code != 0
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Broken links found by the weekly check"
+          existing=$(gh issue list --state open --search "in:title \"$title\"" --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file lychee-report.md
+          else
+            gh issue create --title "$title" --body-file lychee-report.md
+          fi

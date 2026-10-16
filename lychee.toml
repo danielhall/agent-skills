@@ -1,0 +1,17 @@
+# Link checker config for .github/workflows/links.yml. Run locally with: lychee --config lychee.toml "./**/*.md"
+
+# Placeholder and example URLs used in skill instructions.
+exclude = [
+  '^https?://localhost',
+  '^https?://127\.0\.0\.1',
+  '^https?://(www\.)?example\.(com|org)',
+  '^https?://your-site\.com',
+  '<[^>]+>',
+]
+
+# The template links to placeholder files that only exist once a skill is created from it.
+exclude_path = ["node_modules", "template"]
+
+accept = ["200..=299", "429"]
+max_retries = 3
+timeout = 20

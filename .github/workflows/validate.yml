@@ -1,0 +1,66 @@
+name: Validate skills
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  # Pinned so upstream changes can't break CI unexpectedly. Bump deliberately.
+  SKILLS_REF_COMMIT: 69ef37e9424c0a7ea9dd2293b559e43ec8176379
+  SKILLS_CLI_VERSION: 1.7.0
+
+jobs:
+  spec:
+    name: Agent Skills spec
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+      - name: Validate each skill with skills-ref
+        run: |
+          status=0
+          for dir in skills/*/; do
+            uvx --from "git+https://github.com/agentskills/agentskills@${SKILLS_REF_COMMIT}#subdirectory=skills-ref" \
+              skills-ref validate "$dir" || status=1
+          done
+          exit $status
+
+  repo:
+    name: README and typography
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: node scripts/check-repo.mjs
+
+  discovery:
+    name: skills CLI discovery
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Check the CLI finds every public skill and hides internal ones
+        env:
+          CI: "1"
+          NO_COLOR: "1"
+        run: |
+          node scripts/check-repo.mjs --list-public > expected.txt
+          npx -y "skills@${SKILLS_CLI_VERSION}" add . --list 2>&1 \
+            | sed -n 's/^│    \([a-z0-9-]*\)$/\1/p' | sort > found.txt
+          if [ ! -s found.txt ]; then
+            echo "::error::Couldn't read any skills from the CLI output. Its format may have changed."
+            exit 1
+          fi
+          if ! diff -u expected.txt found.txt; then
+            echo "::error::The skills CLI doesn't list the expected public skills (diff above: - expected, + found)."
+            exit 1
+          fi
+          echo "CLI lists $(wc -l < found.txt) skills, as expected."
