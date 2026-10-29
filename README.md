@@ -13,7 +13,7 @@ A skill is a folder containing a `SKILL.md` file: a set of instructions (plus op
 | [`figma-site-to-design`](skills/figma-site-to-design/SKILL.md) | Rebuild a running website in Figma as editable frames backed by variables, text styles and components, desktop and mobile |
 | [`git-commit-messages`](skills/git-commit-messages/SKILL.md) | Commit messages that follow Conventional Commits 1.0.0, with a lowercase subject line |
 | [`media-video-download`](skills/media-video-download/SKILL.md) | Download video or audio with yt-dlp, with sensible formats and fixes for common failures |
-| [`nextjs-cloudflare-deploy`](skills/nextjs-cloudflare-deploy/SKILL.md) | Deploy Next.js to Cloudflare Workers with OpenNext, including environments, variables and ISR caching |
+| [`nextjs-cloudflare-deploy`](skills/nextjs-cloudflare-deploy/SKILL.md) | Deploy Next.js to Cloudflare Workers with OpenNext, including Worker Previews per branch, secrets, variables and ISR caching |
 | [`web-accessibility-testing`](skills/web-accessibility-testing/SKILL.md) | WCAG 2.2 AA testing with Playwright and axe, keyboard tests and a blocking CI job |
 | [`writing-uk-english`](skills/writing-uk-english/SKILL.md) | British English spelling and conventions in all prose |
 
