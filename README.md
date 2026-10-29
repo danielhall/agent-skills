@@ -9,6 +9,7 @@ A skill is a folder containing a `SKILL.md` file: a set of instructions (plus op
 | Skill | Description |
 | ----- | ----------- |
 | [`code-comments`](skills/code-comments/SKILL.md) | Comments only where the code can't explain itself, two lines at most, with longer docs in `/docs/` |
+| [`code-dependency-vetting`](skills/code-dependency-vetting/SKILL.md) | Check whether a package, CLI, Action, hook or MCP server is trustworthy before adding it, ending in a short verdict |
 | [`dotnet-solution-setup`](skills/dotnet-solution-setup/SKILL.md) | .NET solution layout: `global.json`, shared build props, central package management, layering and tests |
 | [`figma-site-to-design`](skills/figma-site-to-design/SKILL.md) | Rebuild a running website in Figma as editable frames backed by variables, text styles and components, desktop and mobile |
 | [`git-commit-messages`](skills/git-commit-messages/SKILL.md) | Commit messages that follow Conventional Commits 1.0.0, with a lowercase subject line |
