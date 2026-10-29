@@ -8,6 +8,7 @@ A skill is a folder containing a `SKILL.md` file: a set of instructions (plus op
 
 | Skill | Description |
 | ----- | ----------- |
+| [`cloudflare-content-rag`](skills/cloudflare-content-rag/SKILL.md) | A "chat with this site" assistant on Cloudflare: CMS to R2 sync, AI Search retrieval, streamed answers with real citations, abuse protection |
 | [`code-comments`](skills/code-comments/SKILL.md) | Comments only where the code can't explain itself, two lines at most, with longer docs in `/docs/` |
 | [`dotnet-solution-setup`](skills/dotnet-solution-setup/SKILL.md) | .NET solution layout: `global.json`, shared build props, central package management, layering and tests |
 | [`figma-site-to-design`](skills/figma-site-to-design/SKILL.md) | Rebuild a running website in Figma as editable frames backed by variables, text styles and components, desktop and mobile |
@@ -138,6 +139,7 @@ Current area prefixes (add new ones as needed, and list them here):
 
 | Prefix | For |
 | ------ | --- |
+| `cloudflare-` | Building on Cloudflare: Workers, storage, AI |
 | `code-` | How code itself is written: style, comments, structure |
 | `dotnet-` | .NET and C# projects |
 | `figma-` | Figma files: building designs from code, design systems, design-to-code |
